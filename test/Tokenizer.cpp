@@ -10,7 +10,7 @@ Tokenizer::Tokenizer(const char* file_path) {
     std::ifstream fin(file_path, std::ifstream::in);
     int cur = 0;
     char top = ' ';
-    for (;;) {
+    for (;;cur++) {
         if (cur == 0) fin.get(top);
 
         for (; top == ' ' || top == '\t' || top == '\n'; cur++, fin.get(top)) {
