@@ -11,10 +11,11 @@ Tokenizer::Tokenizer(const char* file_path) {
     int cur = 0;
     char top = ' ';
     for (;;) {
-        do {
-            cur++;
+        if (cur == 0) fin.get(top);
+
+        for (; top == ' ' || top == '\t' || top == '\n'; cur++, fin.get(top)) {
             document_text.push_back(top);
-        } while (fin.get(top) && (top == ' ' || top == '\t' || top == '\n'));
+        }
 
         if (fin.eof()) break;
 
@@ -41,7 +42,7 @@ Tokenizer::Tokenizer(const char* file_path) {
         else {
             document_text.push_back(top);
             document_tokens.push_back(Document_token(std::string{top}, cur, cur+1));
-            top = ' ';
+            fin.get(top);
         }
     }
 }
