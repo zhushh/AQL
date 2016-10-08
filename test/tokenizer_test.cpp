@@ -11,7 +11,7 @@ int main()
     Tokenizer tok(file);
     vector<Document_token> v = tok.get_document_tokens();
     for (auto i : v) {
-        cout << i.text << endl;
+        cout << i.text << ": (" << i.from << ", " << i.to << ")" << endl;
     }
     cout << tok.get_document_text() << endl;
     return 0;
