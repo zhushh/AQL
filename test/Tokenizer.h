@@ -3,12 +3,16 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 
 typedef struct Document_token {
     int from;
     int to;
     std::string text;
     Document_token(std::string w, int f, int t) : text(w), from(f), to(t) {}
+    std::string to_string() {
+        return text + ":(" + std::to_string(from) + ", " + std::to_string(to) + ")";
+    }
 } Document_token;
 
 class Tokenizer {

@@ -33,7 +33,6 @@ Lexer::~Lexer() { fin.close(); }
 bool Lexer::canMove() { return !(fin.eof()); }
 void Lexer::getchar() { column++; fin.get(peek); }
 bool Lexer::readch(char c) {
-    getchar();
     if (peek != c) return false;
     peek = ' ';
     return true;

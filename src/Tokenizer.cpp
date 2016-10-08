@@ -42,6 +42,7 @@ Tokenizer::Tokenizer(const char* file_path) {
         else {
             document_text.push_back(top);
             document_tokens.push_back(Document_token(std::string{top}, cur, cur+1));
+            cur++;
             fin.get(top);
         }
     }

@@ -19,9 +19,6 @@ public:
     View(std::string name) : name_(name) {}
     void put(std::string name, std::vector<Document_token> document_tokens) {
         tables[name] = document_tokens;
-        for (auto i : document_tokens) {
-            std::cout << i.text << ":(" << i.from << ", " << i.to << ")" << endl;
-        }
     }
     std::vector<Document_token> get(std::string name) {
         return tables[name];
@@ -44,8 +41,8 @@ public:
             for (auto ptr = tables.begin(); ptr != tables.end(); ptr++) {
                 int max_width = 0;
                 for (auto i : (ptr->second)) {
-                    if (i.to - i.from > max_width) {
-                        max_width = i.to - i.from;
+                    if (i.to_string().size() > max_width) {
+                        max_width = i.to_string().size();
                     }
                 }
                 widths.push_back(max_width);
@@ -66,9 +63,7 @@ public:
                 for (auto ptr = tables.begin(); ptr != tables.end(); ptr++) {
                     Document_token t = (ptr->second)[i];
                     std::cout << "| ";
-                    // std::cout << std::left << std::setw(widths[i]) << t.text << ":(" << t.from << ", " << t.to << ")";
-                    // std::cout << std::left << std::setw(widths[i]) << t.from << ", " << t.to;
-                    std::cout << t.text << ":(" << t.from << ","<< t.to << ")";
+                    std::cout << std::left << t.to_string();
                     std::cout << " ";
                 }
                 std::cout << "|" << std::endl;

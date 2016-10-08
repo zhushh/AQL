@@ -41,33 +41,35 @@ public:
             for (auto ptr = tables.begin(); ptr != tables.end(); ptr++) {
                 int max_width = 0;
                 for (auto i : (ptr->second)) {
-                    if (i.to - i.from > max_width) {
-                        max_width = i.to - i.from;
+                    if (i.to_string().size() > max_width) {
+                        max_width = i.to_string().size();
                     }
                 }
                 widths.push_back(max_width);
             }
 
             show_line(widths);
-            // int k = 0;
-            // for (auto ptr = tables.begin(); ptr != tables.end(); ptr++, k++) {
-            //     std::cout << "| ";
-            //     std::cout << std::left << std::setw(widths[k]) << ptr->first;
-            //     std::cout << " ";
-            // }
-            // show_line(widths);
-            // // show document_token data
-            // int rows = ((tables.begin())->second).size();
-            // for (int i = 0; i < rows; i++) {
-            //     for (auto ptr = tables.begin(); ptr != tables.end(); ptr++) {
-            //         Document_token t = (ptr->second)[i];
-            //         std::cout << "| ";
-            //         std::cout << std::left << std::setw(widths[i]) << t.text << ":(" << t.from << ", " << t.to << ")";
-            //         std::cout << " ";
-            //     }
-            //     std::cout << "|" << std::endl;
-            // }
-            // show_line(widths);
+            int k = 0;
+            for (auto ptr = tables.begin(); ptr != tables.end(); ptr++, k++) {
+                std::cout << "| ";
+                std::cout << std::left << std::setw(widths[k]) << ptr->first;
+                std::cout << " ";
+            }
+            std::cout << "|" << std::endl;
+            show_line(widths);
+            // show document_token data
+            int rows = ((tables.begin())->second).size();
+            for (int i = 0; i < rows; i++) {
+                for (auto ptr = tables.begin(); ptr != tables.end(); ptr++) {
+                    Document_token t = (ptr->second)[i];
+                    std::cout << "| ";
+                    std::cout << std::left << t.to_string();
+                    std::cout << " ";
+                }
+                std::cout << "|" << std::endl;
+            }
+            show_line(widths);
+            std::cout << rows << " rows in set" << std::endl;
         }
     }
 };
