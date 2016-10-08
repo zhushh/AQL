@@ -11,36 +11,41 @@ Tokenizer::Tokenizer(const char* file_path) {
     int cur = 0;
     char top = ' ';
     for (;;) {
+        do {
+            cur++;
+            document_text.push_back(top);
+        } while (fin.get(top) && (top == ' ' || top == '\t' || top == '\n'));
+
         if (fin.eof()) break;
-        while (top == ' ' || top == '\t' || top == '\n') { cur++, fin.get(top); document_text.push_back(top); }
 
         if (isdigit(top)) {
             int from = cur;
             std::string number = "";
-            for (; isdigit(top); fin.get(top), cur++) {
+            do {
                 number.push_back(top);
                 document_text.push_back(top);
-            }
+                cur++;
+            } while(fin.get(top) && isdigit(top));
             document_tokens.push_back(Document_token(number, from, cur));
         }
         else if (isalpha(top)) {
             int from = cur;
             std::string word = "";
-            for (; isalpha(top); fin.get(top), cur++) {
+            do {
                 word.push_back(top);
                 document_text.push_back(top);
-            }
+                cur++;
+            } while (fin.get(top) && isalpha(top));
             document_tokens.push_back(Document_token(word, from, cur));
         }
         else {
-            std::string s = "";
-            s.push_back(top);
             document_text.push_back(top);
-            document_tokens.push_back(Document_token(s, cur, cur+1));
+            document_tokens.push_back(Document_token(std::string{top}, cur, cur+1));
             top = ' ';
         }
     }
 }
+
 Tokenizer::~Tokenizer() {}
 
 std::vector<Document_token> Tokenizer::get_document_tokens() {
